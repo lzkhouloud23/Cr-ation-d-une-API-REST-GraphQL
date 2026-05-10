@@ -1,0 +1,62 @@
+enum DeviceType {
+  laptop
+  smartphone
+  tablet
+  server
+}
+
+enum DeviceStatus {
+  active
+  inactive
+  maintenance
+}
+
+type Device {
+  id: String!
+  userId: String!
+  name: String!
+  type: DeviceType!
+  serialNumber: String!
+  status: DeviceStatus!
+}
+
+type User {
+  id: String!
+  name: String!
+  email: String!
+  password: String!
+  devices: [Device!]!
+}
+
+type Query {
+  user(id: String!): User
+  users: [User!]!
+
+  device(id: String!): Device
+  devices: [Device!]!
+  devicesByUser(userId: String!): [Device!]!
+}
+
+type Mutation {
+  addUser(name: String!, email: String!, password: String!): User
+  updateUser(id: String!, name: String!, email: String!, password: String!): User
+  deleteUser(id: String!): Boolean!
+
+  addDevice(
+    userId: String!
+    name: String!
+    type: DeviceType!
+    serialNumber: String!
+    status: DeviceStatus!
+  ): Device
+
+  updateDevice(
+    id: String!
+    name: String!
+    type: DeviceType!
+    serialNumber: String!
+    status: DeviceStatus!
+  ): Device
+
+  deleteDevice(id: String!): Boolean!
+}
